@@ -256,6 +256,15 @@ void AtomBrowserClient::OverrideSiteInstanceForNavigation(
       pending_processes_[pending_process->GetID()] = web_contents;
     }
   } else {
+    // OverrideSiteInstanceForNavigation will be called more than once during a
+    // navigation (currently twice, on request and when it's about to commit in
+    // the renderer), look at RenderFrameHostManager::GetFrameHostForNavigation.
+    // In the default mode we should resuse the same site instance until the
+    // request commits otherwise it will get destroyed. Currently there is no
+    // unique lifetime tracker for a navigation request during site instance
+    // creation. We check for the state of the request, which should be one of
+    // (WAITING_FOR_RENDERER_RESPONSE, STARTED, RESPONSE_STARTED, FAILED) along
+    // with the availability of a speculative render frame host.
     if (has_request_started) {
       *new_instance = current_instance;
       return;

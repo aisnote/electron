@@ -261,7 +261,7 @@ class ResolveProxyHelper {
                     const GURL& url) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
-    net::ProxyService* proxy_service =
+    net::ProxyResolutionService* proxy_service =
         context_getter->GetURLRequestContext()->proxy_service();
     net::CompletionCallback completion_callback =
         base::Bind(&ResolveProxyHelper::OnResolveProxyCompleted,
@@ -279,7 +279,7 @@ class ResolveProxyHelper {
 
   Session::ResolveProxyCallback callback_;
   net::ProxyInfo proxy_info_;
-  net::ProxyService::PacRequest* pac_req_;
+  net::ProxyResolutionService::PacRequest* pac_req_;
   scoped_refptr<base::SingleThreadTaskRunner> original_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(ResolveProxyHelper);

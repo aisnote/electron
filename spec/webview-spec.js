@@ -645,7 +645,7 @@ describe('<webview> tag', function () {
     })
   })
 
-  describe('setDevToolsWebCotnents() API', () => {
+  describe('setDevToolsWebContents() API', () => {
     it('sets webContents of webview as devtools', (done) => {
       const webview2 = new WebView()
       webview2.addEventListener('did-attach', () => {
